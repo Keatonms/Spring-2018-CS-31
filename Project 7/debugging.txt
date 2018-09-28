@@ -1,0 +1,52 @@
+DEBUGGING ERRORS:
+
+When a D lands where the player @ was before @ can get away, he dies.???????? // not true  
+HOW IT SHOULD WORK:	Player @ should only die if D lands on the space as 
+				player @ after they have both made their moves
+
+"You lose" always occurs whenever there is a Dinosaur below and to the right of the player
+	one space.  i.e. dinosaurs row and column are 1 greater than the players
+
+Either 1:  The program believes that the position of the player is at [row,col] = [2,3] when it's actually at [1,2]
+		 assuming that the dinosaurs position is correct.
+Or 2:  The program belives the dinosaur is at position [1,2] when it its actually at [2,3]
+
+
+TWO REFERNCE FRAMES:
+program thinks player is at [r+1,c+1] when it's at [r,c] if dino position is correctly at [r+1,c+1]
+OR
+program thinks dinosaur is at [r-1,c-1] when it's at [r,c] if player position is correctly at [r-1,c-1]
+
+Game.play isDead?>Player isDead? >> (returns m_dead) >> true if setDead >> called in Vally::moveDinosaurs() 
+>> calls on Dinosaurs::move()
+
+Wierd instance:
+...
+@DD
+...
+
+
+There are 2 dinosaurs remaining.
+The player has lasted 2 steps.
+The player is dead.
+There are 0 dinosaurs at [row,col] 1,1
+There are 0 dinosaurs at [row,col] 1,2
+There are 0 dinosaurs at [row,col] 1,3
+There are 0 dinosaurs at [row,col] 2,1
+There are 1 dinosaurs at [row,col] 2,2
+There are 1 dinosaurs at [row,col] 2,3
+There are 0 dinosaurs at [row,col] 3,1
+There are 0 dinosaurs at [row,col] 3,2
+There are 0 dinosaurs at [row,col] 3,3
+The player is at [row,col]: 2, 1
+You lose.
+Press any key to continue . . .
+
+----------------------------------------------
+Dinosaur movement currently works perfectly with just one dinosaur, HOWEVER: adding another dinosaur causes bugs in dino movement.
+BUGS:
+	a dinosaur makes no move even when it's not on the border of the valley
+	a dinosaur moves diagonally
+	(a dinosaur moves two spaces)
+possible cause:
+	One dinosaur is being told to do the other dinosaurs movement.
